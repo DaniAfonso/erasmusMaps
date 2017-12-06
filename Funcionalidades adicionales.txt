@@ -1,0 +1,13 @@
+Funcionalidades adicionales:
+
+- Se ajusta la latitud y longitud dependiendo del dispositivo usado y el zoom.
+
+- Se ajusta el tamaño del mapa dependiendo del dispositivo.
+
+- Se centra automaticamente el mapa con las marcas establecidas, para que se vean todas en todo momento.
+
+- La latitud y longitud se obtienen mediante la api de google.
+
+- Se permite al usuario modificar mediante un menu avanzado, la posibilidad de realizar una busqueda segura o no,
+esto sirve para asegurar que las peticiones a la api de google se hacen correctamente aunque superemos 10 peticiones
+cada dos segundos (que es su límite).
