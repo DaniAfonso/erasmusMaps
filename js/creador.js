@@ -1,3 +1,18 @@
+/**
+ * Crea elementos de casi cualquier tipo, si recibe variables nulas, 
+ * no las agrega y si no, las añade.
+ * @param {*} elemento 
+ * @param {*} clase 
+ * @param {*} id 
+ * @param {*} tipo 
+ * @param {*} texto 
+ * @param {*} click 
+ * @param {*} value 
+ * @param {*} inputT 
+ * @param {*} forId 
+ * @param {*} img 
+ * @param {*} name 
+ */
 function createElement(elemento, clase, id, tipo, texto, click, value, inputT, forId, img, name)
 {
     var ele = document.createElement(elemento);
@@ -31,12 +46,18 @@ function createElement(elemento, clase, id, tipo, texto, click, value, inputT, f
     return ele;
 }
 
+
 var contador = 0;
-function crearCheck(indice, nombre)
+/**
+ * Creador de elementos tipo CheckBox.
+ * @param {*} valor 
+ * @param {*} nombre 
+ */
+function crearCheck(valor, nombre)
 {
     let check = createElement("div", null, null, null, null, null, null, null, null, null, null);
     check.appendChild(createElement("input", null, contador, "checkbox", null, null, null, null, null, null, "ciclo"));
-    check.appendChild(createElement("label", null, null, null, nombre, null, indice, null, contador, null, null));
+    check.appendChild(createElement("label", null, null, null, nombre, null, valor, null, contador, null, null));
     contador++;
     return check;
 }

@@ -1,4 +1,32 @@
-var listaCompleta = new Array();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var listaCompleta = new Array();
 var filtrados = new Array();
 var elegidos = new Array();
 var todosMarcados = false;
@@ -8,7 +36,7 @@ recupearJson();
  * Recupera el Json y lo mete en el array de listaCompleta.
  */
 function recupearJson() {
-    for (let index = 0; index < datos.length; index++) {
+    for (let index = 0; index &lt; datos.length; index++) {
         listaCompleta.push(new movilidad(datos[index].tipo, datos[index].ciclo, datos[index].pais, datos[index].ciudad));
     }
     crearOpciones();
@@ -33,7 +61,7 @@ function crearOpciones() {
 function recuperarTipos(tipo) {
     var aux = [];
     /*
-    for (let index = 0; index < listaCompleta.length; index++) {
+    for (let index = 0; index &lt; listaCompleta.length; index++) {
         if (listaCompleta[index].tipo.includes(tipo))
             aux.push(listaCompleta[index]);
     }
@@ -65,7 +93,7 @@ function rellenarLimpiando(tipo, filtrados) {
         contenedorCheck.appendChild(createElement("button", "btn btn-outline-info", "btnSeleccionar", null, "Seleccionar/Desseleccionar", "todos()", null, null, null, null));
 
         let filtradosUnicos = filtrar(tipo, filtrados);
-        for (let index = 0; index < filtradosUnicos.length; index++) {
+        for (let index = 0; index &lt; filtradosUnicos.length; index++) {
             contenedorCheck.appendChild(crearCheck(index, filtradosUnicos[index]));
         }
         contenedor.appendChild(contenedorCheck);
@@ -76,7 +104,7 @@ function rellenarLimpiando(tipo, filtrados) {
         let filtradosUnicos = filtrar(tipo, filtrados);
 
         let combo = createElement("select", "custom-select", "comboPaises", null, null, null, null, null, null, null);
-        for (let index = 0; index < filtradosUnicos.length; index++) {
+        for (let index = 0; index &lt; filtradosUnicos.length; index++) {
             combo.appendChild(createElement("option", null, null, null, filtradosUnicos[index], null, filtradosUnicos[index], null, null, null));
         }
         contenedorCombo.appendChild(combo);
@@ -94,19 +122,19 @@ function filtrar(tipo, arrayFiltrar) {
     var listaAux = [];
 
     if (tipo == 0) {
-        for (let index = 0; index < arrayFiltrar.length; index++) {
+        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
             let ciclo = arrayFiltrar[index].ciclo;
             if (listaAux.indexOf(ciclo) === -1)
                 listaAux.push(ciclo);
         }
     } else if (tipo == 1) {
-        for (let index = 0; index < arrayFiltrar.length; index++) {
+        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
             let pais = arrayFiltrar[index].pais;
             if (listaAux.indexOf(pais) === -1)
                 listaAux.push(pais);
         }
     } else if (tipo == 2) {
-        for (let index = 0; index < arrayFiltrar.length; index++) {
+        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
             let ciudad = arrayFiltrar[index].ciudad;
             if (listaAux.indexOf(ciudad) === -1)
                 listaAux.push(ciudad);
@@ -122,7 +150,7 @@ function buscarMarcados() {
     elegidos = new Array();
     if (tipoRadio == 0) {
         let marcados = document.querySelectorAll("input[name='ciclo']:checked");
-        for (let index = 0; index < marcados.length; index++) {
+        for (let index = 0; index &lt; marcados.length; index++) {
             let aux = marcados[index].nextElementSibling.textContent;
             filtrados.forEach(element => {
                 if (element.ciclo == aux) {
@@ -148,11 +176,34 @@ function buscarMarcados() {
 function existeLocalizacion(propuesto) {
     var encontrado = false;
     elegidos.forEach(element => {
-        if (element.pais == propuesto.pais && element.ciudad == propuesto.ciudad) {
-            element.ciclo += "<br/>" + propuesto.ciclo;
+        if (element.pais == propuesto.pais &amp;&amp; element.ciudad == propuesto.ciudad) {
+            element.ciclo += "&lt;br/>" + propuesto.ciclo;
             encontrado = true;
         }
     });
     if (encontrado == false)
         elegidos.push(new movilidad(propuesto.tipo, propuesto.ciclo, propuesto.pais, propuesto.ciudad));
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#buscarMarcados">buscarMarcados</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#crearCheck">crearCheck</a></li><li><a href="global.html#crearOpciones">crearOpciones</a></li><li><a href="global.html#createElement">createElement</a></li><li><a href="global.html#deleteTreeElements">deleteTreeElements</a></li><li><a href="global.html#existeLocalizacion">existeLocalizacion</a></li><li><a href="global.html#filtrar">filtrar</a></li><li><a href="global.html#marcarBueno">marcarBueno</a></li><li><a href="global.html#mediaQ">mediaQ</a></li><li><a href="global.html#movilidad">movilidad</a></li><li><a href="global.html#movilidadLocalizacion">movilidadLocalizacion</a></li><li><a href="global.html#recupearJson">recupearJson</a></li><li><a href="global.html#recuperarTipos">recuperarTipos</a></li><li><a href="global.html#rellenarLimpiando">rellenarLimpiando</a></li><li><a href="global.html#todos">todos</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 06 2017 12:42:50 GMT+0000 (Hora estándar GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
