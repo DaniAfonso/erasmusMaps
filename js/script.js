@@ -119,19 +119,35 @@ function buscarMarcados() {
     }
     marcarBueno(elegidos);
 }
+
+function addSiglas(movilidadAux)
+{
+    let aux = new movilidad(movilidadAux.tipo, movilidadAux.ciclo, movilidadAux.pais, movilidadAux.ciudad);
+    if (movilidadAux.tipo.includes("Superior")) {
+       aux.ciclo = "GS: " + aux.ciclo;
+    }
+    else if (movilidadAux.tipo.includes("Medio")) {
+        aux.ciclo = "GM: " + aux.ciclo;
+     }
+    else if (movilidadAux.tipo.includes("Profesorado")) {
+        aux.ciclo = "Dpt: " + aux.ciclo;
+     }
+    return aux;
+}
 /**
  * Comprueba que exista ya esa localizacion, si existe, añade el ciclo a la misma localizacion,
  * en caso de que no exista, añade una nueva.
  * @param {*} propuesto Elemento propuesto para añadirlo
  */
 function existeLocalizacion(propuesto) {
+    var aux = addSiglas(propuesto);
     var encontrado = false;
     elegidos.forEach(element => {
         if (element.pais == propuesto.pais && element.ciudad == propuesto.ciudad) {
-            element.ciclo += "<br/>" + propuesto.ciclo;
+            element.ciclo += "<br/>" + aux.ciclo;
             encontrado = true;
         }
     });
     if (encontrado == false)
-        elegidos.push(new movilidad(propuesto.tipo, propuesto.ciclo, propuesto.pais, propuesto.ciudad));
+        elegidos.push(aux);
 }
