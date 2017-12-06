@@ -1,84 +1,78 @@
-/*
+var mapProp;
+var map;
+var markers = [];
+
+/**
+ * Mapa de google, con el que se trabaja todo el tiempo.
+ */
 function myMap() {
-    var map;
-    var mapProp;
+    /**
+     * Aplicamos el zoom que corresponda por el dispositivo utilizado
+     */
+    var zoom = mediaQ();
+    /**
+     * Propiedades del mapa, lo centrado que está, el zoom y el tipo
+     */
     mapProp = {
         center: new google.maps.LatLng(47.8310667, 15.174334),
-        zoom: 4,
+        zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
-
+/**
+ * Elimina todos los objetos markers en el mapa.
+ */
 function clearOverlays() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers.length = 0;
 }
-*/
 
 /**
- * Crea un mapa con los marcadores de las ciudades con los ciclos elegidos
+ * Crea un mapa con los marcadores de las ciudades con los ciclos elegidos.
  * @param {*} elegidos Array con los ciclos elegidos a mostrar
  */
 function marcarBueno(elegidos) {
-    /*
-    markers.forEach(element => {
-        element.setMap(null);
-    });
-*/
-    var zoom = mediaQ();
-    let markers = [];
-    // clearOverlays();
-
-    let mapProp = {
-        center: new google.maps.LatLng(47.8310667, 15.174334),
-        zoom: zoom,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    clearOverlays();
 
     elegidos.forEach(element => {
-        //Utiliza la api de google incluye el geocoder, pasandolo direccion devuelve latitud y logitud
         var geocoder = new google.maps.Geocoder();
-        var string = element.ciudad + ", " + element.pais;
         var ciclo = element.ciclo;
-
+        // Geocode devuelve la latitud y la longitud enviandole la ciudad y el pais.
         geocoder.geocode({
-            address: string
+            address: element.ciudad + ", " + element.pais
         }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                var myCenter = new google.maps.LatLng(
-                    //Resultados asignados a myCenter
+                // Posicion para colocar la marca.
+                var posicionMarca = new google.maps.LatLng(
                     results[0].geometry.location.lat(),
                     results[0].geometry.location.lng()
                 );
-                //Nuevo marcador
-                var marker = new google.maps.Marker({
-                    //Posicion es myCenter
-                    position: myCenter,
-                    //Animacion
+                // Marca que asignaremos al mapa.
+                var marca = new google.maps.Marker({
+                    position: posicionMarca,
                     animation: google.maps.Animation.BOUNCE,
                     contentString: ciclo
                 });
-
-                //Añadir al mapa
-                marker.setMap(map);
-
-                marker.addListener("click", function () {
-                    //Inforwindow para el marcador
-                    var infowindow = new google.maps.InfoWindow({
-                        content: ciclo
+                // Agrega el listener para que al hacer click muestre el mensaje
+                marca.addListener("click",
+                    function () {
+                        // Ventana con la informacion
+                        var infowindow = new google.maps.InfoWindow({
+                            content: ciclo
+                        });
+                        // Asignado al map y marca
+                        infowindow.open(map, marca);
                     });
-                    //Mensaje
-                    infowindow.open(map, marker);
-                });
-                markers.push(marker);
+                // Agrega la marca al mapa
+                marca.setMap(map);
+                markers.push(marca);
             } else {
-                //Algo mal
+                console.log("Existe un problema con las peticiones de localizacion.");
+                console.log(status);
             }
-            console.log(status);
         })
     })
 }

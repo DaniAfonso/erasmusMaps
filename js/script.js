@@ -1,7 +1,7 @@
 var listaCompleta = new Array();
 var filtrados = new Array();
 var elegidos = new Array();
-var todosMarcados = false;
+
 recupearJson();
 
 /**

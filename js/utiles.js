@@ -19,6 +19,7 @@ function clear(node) {
 	node.parentNode.removeChild(node);
 }
 
+var todosMarcados = false;
 /**
  * Marca o desmarca todos los check cada vez que se pulse
  */
