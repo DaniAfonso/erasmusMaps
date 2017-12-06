@@ -56,8 +56,12 @@ var contador = 0;
 function crearCheck(valor, nombre)
 {
     let check = createElement("div", null, null, null, null, null, null, null, null, null, null);
-    check.appendChild(createElement("input", null, contador, "checkbox", null, null, null, null, null, null, "ciclo"));
+    check.setAttribute("class", "custom-control custom-checkbox");
+    let checkboxAux = createElement("input", null, contador, "checkbox", null, null, null, null, null, null, "ciclo");
+    checkboxAux.setAttribute("class", "custom-control-input");
+    check.appendChild(checkboxAux);
     check.appendChild(createElement("label", null, null, null, nombre, null, valor, null, contador, null, null));
+    check.appendChild(createElement("span", "custom-control-indicator", null, null, null, null, null, null, null, null, null));
     contador++;
     return check;
 }

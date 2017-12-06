@@ -58,6 +58,7 @@ function rellenarLimpiando(tipo, filtrados) {
         contenedorSecundario.appendChild(createElement("button", "btn btn-outline-info", "btnSeleccionar", null, "Seleccionar/Desseleccionar", "todos()", null, null, null, null));
         for (let index = 0; index < filtradosUnicos.length; index++) {
             contenedorSecundario.appendChild(crearCheck(index, filtradosUnicos[index]));
+            contenedorSecundario.setAttribute("class", "d-flex flex-column");
         }
         //todosMarcados = false;
         //todos();

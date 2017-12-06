@@ -52,25 +52,28 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body d-flex flex-column">
           <p>Hacer la busqueda más segura.</p>
-          <p>
-              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+
+          <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+            aria-controls="collapseExample">
                 Más información
               </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                Al activar esta opción, la busqueda es más lenta pero se asegura que la información recibida es correcta y que no habrá ninguna perdida de datos, sin embargo, si está desactivada, y realizas mas de 10 peticiones al servidor pueden surgir errores y perder algunas marcas en el mapa, ya que la api de google está limitada.
-              </div>
+          <br/>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              Al activar esta opción, la busqueda es más lenta pero se asegura que la información recibida es correcta y que no habrá ninguna
+              perdida de datos, sin embargo, si está desactivada, y realizas mas de 10 peticiones al servidor pueden surgir
+              errores y perder algunas marcas en el mapa, ya que la api de google está limitada.
             </div>
+          </div>
 
 
 
-          <button id="delay" type="button" class="btn btn-danger" onclick="delay()">Desactivar</button>
+          <button id="delay" type="button" class="btn btn-outline-danger" onclick="delay()">Desactivar</button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
@@ -122,8 +125,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" onclick="buscarMarcados()" data-dismiss="modal">Buscar</button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-outline-info" onclick="buscarMarcados()" data-dismiss="modal">Buscar</button>
         </div>
       </div>
     </div>
