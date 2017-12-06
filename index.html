@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Erasmus - Google Maps</title>
 
-  
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -17,9 +17,9 @@
 
 </head>
 
-<body >
-    <div class="page-bg">
-      </div>
+<body>
+  <div class="page-bg">
+  </div>
   <div class=" text-center blanco">
     <h1>Erasmus - Google Maps</h1>
     <p>Daniel Afonso Hernández</p>
@@ -35,11 +35,48 @@
       <div class="col-sm-12">
         <h3></h3>
         <div id="googleMap" style="width:100%;height:600px;"></div>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-sm">Ajustes avanzados</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
+
+
+  <!-- Modal Pequeño -->
+  <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajustes Avanzados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <p>Hacer la busqueda más segura.</p>
+          <p>
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Más información
+              </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                Al activar esta opción, la busqueda es más lenta pero se asegura que la información recibida es correcta y que no habrá ninguna perdida de datos, sin embargo, si está desactivada, y realizas mas de 10 peticiones al servidor pueden surgir errores y perder algunas marcas en el mapa, ya que la api de google está limitada.
+              </div>
+            </div>
+
+
+
+          <button id="delay" type="button" class="btn btn-danger" onclick="delay()">Desactivar</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Grande -->
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -92,7 +129,7 @@
     </div>
   </div>
 
-  
+
   <script src="js/utiles.js"></script>
   <script src="json/jsonMovilidad.js"></script>
   <script src="js/objetos.js"></script>
