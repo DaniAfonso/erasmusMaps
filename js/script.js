@@ -56,12 +56,11 @@ function rellenarLimpiando(tipo, filtrados) {
 
     if (tipo == 0) {
         contenedorSecundario.appendChild(createElement("button", "btn btn-outline-info", "btnSeleccionar", null, "Seleccionar/Desseleccionar", "todos()", null, null, null, null));
+        contenedorSecundario.appendChild(createElement("br", null, null, null, null, null, null, null, null, null));
         for (let index = 0; index < filtradosUnicos.length; index++) {
             contenedorSecundario.appendChild(crearCheck(index, filtradosUnicos[index]));
             contenedorSecundario.setAttribute("class", "d-flex flex-column");
         }
-        //todosMarcados = false;
-        //todos();
     } else if (tipo == 1) {
         let combo = createElement("select", "custom-select", "comboPaises", null, null, null, null, null, null, null);
         for (let index = 0; index < filtradosUnicos.length; index++) {
@@ -70,7 +69,6 @@ function rellenarLimpiando(tipo, filtrados) {
         contenedorSecundario.appendChild(combo);
     }
     contenedor.appendChild(contenedorSecundario);
-    //buscarMarcados();
 }
 /**
  * Devuelve un array con los nombres para los check o para el combo,
@@ -102,6 +100,8 @@ function buscarMarcados() {
     elegidos = new Array();
     if (tipoRadio == 0) {
         let marcados = document.querySelectorAll("input[name='ciclo']:checked");
+        if(marcados.length == 0)
+            alert("Tienes que seleccionar almenos un elemento.");
         marcados.forEach(e => {
             let aux = e.nextElementSibling.textContent;
             filtrados.forEach(element => {

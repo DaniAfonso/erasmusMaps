@@ -29,16 +29,16 @@
             <pre class="prettyprint source linenums"><code>var listaCompleta = new Array();
 var filtrados = new Array();
 var elegidos = new Array();
-var todosMarcados = false;
+
 recupearJson();
 
 /**
  * Recupera el Json y lo mete en el array de listaCompleta.
  */
 function recupearJson() {
-    for (let index = 0; index &lt; datos.length; index++) {
-        listaCompleta.push(new movilidad(datos[index].tipo, datos[index].ciclo, datos[index].pais, datos[index].ciudad));
-    }
+    datos.forEach(e => {
+        listaCompleta.push(new movilidad(e.tipo, e.ciclo, e.pais, e.ciudad));
+    })
     crearOpciones();
 }
 /**
@@ -59,13 +59,7 @@ function crearOpciones() {
  * @return aux array con los datos filtrados
  */
 function recuperarTipos(tipo) {
-    var aux = [];
-    /*
-    for (let index = 0; index &lt; listaCompleta.length; index++) {
-        if (listaCompleta[index].tipo.includes(tipo))
-            aux.push(listaCompleta[index]);
-    }
-    */
+    let aux = [];
     listaCompleta.forEach(element => {
         if (element.tipo.includes(tipo)) {
             aux.push(element);
@@ -80,37 +74,29 @@ function recuperarTipos(tipo) {
  */
 function rellenarLimpiando(tipo, filtrados) {
     let contenedor = document.getElementById("opciones");
-    var contenedorCheck = document.getElementById("check");
-    var contenedorCombo = document.getElementById("combo");
+    let contenedorSecundario = document.getElementById("contenedorSecundario");
 
-    if (contenedorCheck != null)
-        deleteTreeElements(contenedorCheck, true);
-    if (contenedorCombo != null)
-        deleteTreeElements(contenedorCombo, true);
+    if (contenedorSecundario != null)
+        deleteTreeElements(contenedorSecundario, true);
+
+    contenedorSecundario = createElement("div", null, "contenedorSecundario", null, null, null, null, null, null, null);
+    let filtradosUnicos = filtrar(tipo, filtrados);
 
     if (tipo == 0) {
-        contenedorCheck = createElement("div", null, "check", null, null, null, null, null, null, null);
-        contenedorCheck.appendChild(createElement("button", "btn btn-outline-info", "btnSeleccionar", null, "Seleccionar/Desseleccionar", "todos()", null, null, null, null));
-
-        let filtradosUnicos = filtrar(tipo, filtrados);
+        contenedorSecundario.appendChild(createElement("button", "btn btn-outline-info", "btnSeleccionar", null, "Seleccionar/Desseleccionar", "todos()", null, null, null, null));
+        contenedorSecundario.appendChild(createElement("br", null, null, null, null, null, null, null, null, null));
         for (let index = 0; index &lt; filtradosUnicos.length; index++) {
-            contenedorCheck.appendChild(crearCheck(index, filtradosUnicos[index]));
+            contenedorSecundario.appendChild(crearCheck(index, filtradosUnicos[index]));
+            contenedorSecundario.setAttribute("class", "d-flex flex-column");
         }
-        contenedor.appendChild(contenedorCheck);
-        todosMarcados = false;
-        todos();
     } else if (tipo == 1) {
-        contenedorCombo = createElement("div", null, "combo", null, null, null, null, null, null, null);
-        let filtradosUnicos = filtrar(tipo, filtrados);
-
         let combo = createElement("select", "custom-select", "comboPaises", null, null, null, null, null, null, null);
         for (let index = 0; index &lt; filtradosUnicos.length; index++) {
             combo.appendChild(createElement("option", null, null, null, filtradosUnicos[index], null, filtradosUnicos[index], null, null, null));
         }
-        contenedorCombo.appendChild(combo);
-        contenedor.appendChild(contenedorCombo);
+        contenedorSecundario.appendChild(combo);
     }
-    buscarMarcados();
+    contenedor.appendChild(contenedorSecundario);
 }
 /**
  * Devuelve un array con los nombres para los check o para el combo,
@@ -120,26 +106,18 @@ function rellenarLimpiando(tipo, filtrados) {
  */
 function filtrar(tipo, arrayFiltrar) {
     var listaAux = [];
+    let tipoMovilidad;
 
-    if (tipo == 0) {
-        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
-            let ciclo = arrayFiltrar[index].ciclo;
-            if (listaAux.indexOf(ciclo) === -1)
-                listaAux.push(ciclo);
-        }
-    } else if (tipo == 1) {
-        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
-            let pais = arrayFiltrar[index].pais;
-            if (listaAux.indexOf(pais) === -1)
-                listaAux.push(pais);
-        }
-    } else if (tipo == 2) {
-        for (let index = 0; index &lt; arrayFiltrar.length; index++) {
-            let ciudad = arrayFiltrar[index].ciudad;
-            if (listaAux.indexOf(ciudad) === -1)
-                listaAux.push(ciudad);
-        }
-    }
+    arrayFiltrar.forEach(e => {
+        if (tipo == 0)
+            tipoMovilidad = e.ciclo;
+        else if (tipo == 1)
+            tipoMovilidad = e.pais;
+        else if (tipo == 2)
+            tipoMovilidad = e.ciudad;
+        if (listaAux.indexOf(tipoMovilidad) === -1)
+            listaAux.push(tipoMovilidad);
+    })
     return listaAux;
 }
 /**
@@ -150,14 +128,16 @@ function buscarMarcados() {
     elegidos = new Array();
     if (tipoRadio == 0) {
         let marcados = document.querySelectorAll("input[name='ciclo']:checked");
-        for (let index = 0; index &lt; marcados.length; index++) {
-            let aux = marcados[index].nextElementSibling.textContent;
+        if(marcados.length == 0)
+            alert("Tienes que seleccionar almenos un elemento.");
+        marcados.forEach(e => {
+            let aux = e.nextElementSibling.textContent;
             filtrados.forEach(element => {
                 if (element.ciclo == aux) {
                     existeLocalizacion(element);
                 }
             });
-        }
+        })
     } else if (tipoRadio == 1) {
         let comboPais = document.getElementById("comboPaises").value;
         filtrados.forEach(element => {
@@ -168,23 +148,38 @@ function buscarMarcados() {
     }
     marcarBueno(elegidos);
 }
+
+function addSiglas(movilidadAux)
+{
+    let aux = new movilidad(movilidadAux.tipo, movilidadAux.ciclo, movilidadAux.pais, movilidadAux.ciudad);
+    if (movilidadAux.tipo.includes("Superior")) {
+       aux.ciclo = "GS: " + aux.ciclo;
+    }
+    else if (movilidadAux.tipo.includes("Medio")) {
+        aux.ciclo = "GM: " + aux.ciclo;
+     }
+    else if (movilidadAux.tipo.includes("Profesorado")) {
+        aux.ciclo = "Dpt: " + aux.ciclo;
+     }
+    return aux;
+}
 /**
  * Comprueba que exista ya esa localizacion, si existe, añade el ciclo a la misma localizacion,
  * en caso de que no exista, añade una nueva.
  * @param {*} propuesto Elemento propuesto para añadirlo
  */
 function existeLocalizacion(propuesto) {
+    var aux = addSiglas(propuesto);
     var encontrado = false;
     elegidos.forEach(element => {
         if (element.pais == propuesto.pais &amp;&amp; element.ciudad == propuesto.ciudad) {
-            element.ciclo += "&lt;br/>" + propuesto.ciclo;
+            element.ciclo += "&lt;br/>" + aux.ciclo;
             encontrado = true;
         }
     });
     if (encontrado == false)
-        elegidos.push(new movilidad(propuesto.tipo, propuesto.ciclo, propuesto.pais, propuesto.ciudad));
-}
-</code></pre>
+        elegidos.push(aux);
+}</code></pre>
         </article>
     </section>
 
@@ -194,13 +189,13 @@ function existeLocalizacion(propuesto) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#buscarMarcados">buscarMarcados</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#crearCheck">crearCheck</a></li><li><a href="global.html#crearOpciones">crearOpciones</a></li><li><a href="global.html#createElement">createElement</a></li><li><a href="global.html#deleteTreeElements">deleteTreeElements</a></li><li><a href="global.html#existeLocalizacion">existeLocalizacion</a></li><li><a href="global.html#filtrar">filtrar</a></li><li><a href="global.html#marcarBueno">marcarBueno</a></li><li><a href="global.html#mediaQ">mediaQ</a></li><li><a href="global.html#movilidad">movilidad</a></li><li><a href="global.html#movilidadLocalizacion">movilidadLocalizacion</a></li><li><a href="global.html#recupearJson">recupearJson</a></li><li><a href="global.html#recuperarTipos">recuperarTipos</a></li><li><a href="global.html#rellenarLimpiando">rellenarLimpiando</a></li><li><a href="global.html#todos">todos</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#buscarMarcados">buscarMarcados</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#clearOverlays">clearOverlays</a></li><li><a href="global.html#crearCheck">crearCheck</a></li><li><a href="global.html#crearOpciones">crearOpciones</a></li><li><a href="global.html#createElement">createElement</a></li><li><a href="global.html#deleteTreeElements">deleteTreeElements</a></li><li><a href="global.html#existeLocalizacion">existeLocalizacion</a></li><li><a href="global.html#filtrar">filtrar</a></li><li><a href="global.html#marcarBueno">marcarBueno</a></li><li><a href="global.html#mediaQ">mediaQ</a></li><li><a href="global.html#movilidad">movilidad</a></li><li><a href="global.html#movilidadLocalizacion">movilidadLocalizacion</a></li><li><a href="global.html#myMap">myMap</a></li><li><a href="global.html#recupearJson">recupearJson</a></li><li><a href="global.html#recuperarTipos">recuperarTipos</a></li><li><a href="global.html#rellenarLimpiando">rellenarLimpiando</a></li><li><a href="global.html#todos">todos</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 06 2017 12:42:50 GMT+0000 (Hora estándar GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 06 2017 21:41:27 GMT+0000 (Hora estándar GMT)
 </footer>
 
 <script> prettyPrint(); </script>
