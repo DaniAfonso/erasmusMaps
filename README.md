@@ -6,7 +6,7 @@ _Esta app es un buscador de localizaciones, muestra donde han ido los alumnos de
 # https://daniafonso.github.io/erasmusMaps/
 
 
-## Previsualización
+## Previsualización:
 
 <p align="center">
   <img src="img/Preview.png">
