@@ -4,3 +4,10 @@ _Esta app es un buscador de localizaciones, muestra donde han ido los alumnos de
 
 ### Enlace 🔧
 # https://daniafonso.github.io/erasmusMaps/
+
+
+## Previsualización
+
+<p align="center">
+  <img src="img/Preview.png">
+</p>
